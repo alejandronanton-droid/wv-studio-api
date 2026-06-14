@@ -1,10 +1,8 @@
 const express = require('express');
-const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
 const app = express();
-// ? AJUSTE DE PRODUCCIÓN: Render asigna el puerto dinámicamente mediante variables de entorno
 const PORT = process.env.PORT || 8080;
 
 const pathProyectos = path.join(__dirname, 'proyectos.json');
@@ -12,8 +10,17 @@ const pathColores = path.join(__dirname, 'colores.json');
 const pathRedes = path.join(__dirname, 'redes.json'); 
 const pathInfo = path.join(__dirname, 'info.json');
 
-// Habilita CORS completo para que tu dominio de Firebase pueda hacer consultas
-app.use(cors());
+// Puerta de enlace CORS Nativa e Infalible
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    next();
+});
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -95,4 +102,21 @@ app.post('/api/proyectos', (req, res) => {
     });
 });
 
-app.listen(PORT, () => console.log(`? Servidor de Producción W&V en puerto: ${PORT}`));
+// ? NUEVA RUTA: Eliminar pieza por su posición en el Array
+app.delete('/api/proyectos/:index', (req, res) => {
+    const index = parseInt(req.params.index, 10);
+    fs.readFile(pathProyectos, 'utf8', (err, data) => {
+        let proy = []; if (!err && data) { try { proy = JSON.parse(data); } catch(e){} }
+        if (index >= 0 && index < proy.length) {
+            proy.splice(index, 1); // Remueve la pieza seleccionada
+            fs.writeFile(pathProyectos, JSON.stringify(proy, null, 2), (writeErr) => {
+                if (writeErr) return res.status(500).json({ error: "Error de escritura" });
+                res.json({ success: true });
+            });
+        } else {
+            res.status(400).json({ error: "Índice fuera de rango" });
+        }
+    });
+});
+
+app.listen(PORT, () => console.log(`? Servidor W&V Listo en puerto: ${PORT}`));
