@@ -1,0 +1,32 @@
+[
+  {
+    "seccion": "portfolio",
+    "tipo": "video",
+    "ratio": "16:9",
+    "tag": "COMMERCIAL",
+    "titulo": "HELADEROS",
+    "descripcion": "Videos sobre la campaña heladeros artesanales de afadia.",
+    "previewSrc": "http://localhost:8080/videos/WA.mp4",
+    "lightboxSrc": "https://www.youtube.com/watch?v=oMDtHY29qRg"
+  },
+  {
+    "seccion": "destacados",
+    "tipo": "video",
+    "ratio": "16:9",
+    "tag": "COMMERCIAL",
+    "titulo": "Heladeros Home",
+    "descripcion": "Campaña destacada para la vitrina principal de la web.",
+    "previewSrc": "http://localhost:8080/videos/WA.mp4",
+    "lightboxSrc": "https://www.youtube.com/watch?v=oMDtHY29qRg"
+  },
+  {
+    "seccion": "portfolio",
+    "tipo": "video",
+    "ratio": "9:16",
+    "tag": "RELL",
+    "titulo": "CATONS",
+    "descripcion": "jklkasdjlskdjasl",
+    "previewSrc": " http://localhost:8080/videos/Vertical-01.mp4",
+    "lightboxSrc": "https://youtube.com/shorts/_4cqsB8W9eE?si=GuW4GbVZZSTyOxWD"
+  }
+]

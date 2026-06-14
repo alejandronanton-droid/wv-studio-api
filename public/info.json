@@ -1,0 +1,48 @@
+{
+  "textoDestacado": "La mejor decisión de producción es la que nadie nota. ",
+  "textoManifiesto": "La mejor decisión de producción es la que nadie nota. Porque lo que se ve es exactamente lo que tenía que ser...\nSomos W&V",
+  "logos": [
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Vice_logo.svg/3840px-Vice_logo.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Cond%C3%A9_Nast_logo.svg/3840px-Cond%C3%A9_Nast_logo.svg.png",
+    "https://cdn.worldvectorlogo.com/logos/quilmes-3.svg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Pampa_energia_arg_logo.svg/3840px-Pampa_energia_arg_logo.svg.png",
+    "https://cdn.brandfetch.io/idHtVcmdKF/theme/dark/logo.svg?c=1dxbfHSJFAPEGdCLU4o5B",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Logo_Supermercado_Coto.svg/3840px-Logo_Supermercado_Coto.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF_S.A._logo.svg/960px-YPF_S.A._logo.svg.png?_=20220716001957",
+    "https://upload.wikimedia.org/wikipedia/commons/0/0d/MTV-2021.svg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/NaranjaX-logo.svg/960px-NaranjaX-logo.svg.png",
+    "https://static.wikia.nocookie.net/logopedia/images/0/0c/Wintershall_Dea_2019.svg/revision/latest/scale-to-width-down/300?cb=20210521213602"
+  ],
+  "servicios": [
+    {
+      "titulo": "Producción",
+      "descripcion": "Brandedcontent, Tvc, Documental, videoclips, Howto, Social Media Content , corporativo, cine, streaming, coberturas de eventos, campañas fotográficas. Visuales, mapping, proyecciones y más."
+    },
+    {
+      "titulo": "Post",
+      "descripcion": "Edición de sonido y video, efectos visuales, animación, IA generativa, y producción musical, tenemos una perspectiva completa para cuidar cada detalle de las piezas."
+    },
+    {
+      "titulo": "creatividad & mkt",
+      "descripcion": "Creatividad -Desarrollo de Estrategias -Research-Planning-Guión–Storytelling-redacción. Investigación y reporte de tendencias, InboundMarketing."
+    },
+    {
+      "titulo": "Gestion de Talentos",
+      "descripcion": "Manejo de contratos y gestión de derechos con actores, celebridades y músicos. Derechos de imagen, musicales y versiones."
+    }
+  ],
+  "crew": [
+    {
+      "nombre": "Alejandro Nantón",
+      "cargo": "Productor ejecutivo",
+      "foto": "https://cdn.prod.website-files.com/69b0826ecec9a0b3c17f962e/69faac869f035ef780e47e67_04_ALE_02.png",
+      "bio": "Con más de 20 años en la industria, Su experiencia se extiende desde la dirección, post y producción tanto en campo como ejecutiva, desarrollando un expertise audiovisual 360°. Su trayectoria abarca desafíos de contenidos para señales como MTV, VH1, AXN, Paramount, Disney y Vice, trabajando con clientes como Petrobras, SCJ, Microsoft, Campari, Brahma, Shutter Studio, Meta, entre otras y agencias globales como (Ogilvy, BBDO) en LATAM, Caribe y Europa.\nFundador de Insomnia Films y Yakarta, ha producido eventos como los Premios Gardel 2022 (Disney+) y shows como \"Trinchera\" de Babasónicos (Star+). En cine, destaca su producción de \"El Mensaje\" (Oso de Plata, Berlinale 2025), la trilogía de Martín Solá (\"Hamdan\", \"La Familia Chechena\") y coproducciones con Rita Cine (\"Cerro Quemado\", \"Vendrán Lluvias Suaves\").\nSu enfoque integral combina narrativa con ejecución técnica y una fuerte ancla en el diseño de producción. posicionándolo como referente en proyectos audiovisuales de distintas envergaduras. \n"
+    },
+    {
+      "nombre": "Nahuel Varela",
+      "cargo": "Director - DOP",
+      "foto": "https://cdn.prod.website-files.com/69b0826ecec9a0b3c17f962e/69faac86d9972e523a3a0122_03_NAHUEL_02.png",
+      "bio": "Nahuel Varela is an Argentine Director of\nPhotography and Director with nearly two\ndecades of experience across feature films,\ncommercials, documentaries and branded.\nHis work combines a strong cinematic\napproach with extensive experience in large-\nscale productions, having collaborated with\nleading agencies, production companies and\nfilmmakers throughout Latin America and\ninternational markets.\nOver the course of his career he has filmed\nprojects in Argentina, Paraguay, Brazil, Iran,\nEEUU and other international territories,\ndeveloping a visual language rooted in\natmosphere, emotional storytelling and a\ndeep understanding of cinematic narrative.\nHis credits include The Letter starring Harvey\nKeitel, Leal 2, Luna de Cigarras, and Filo Hua\nHum, winner of Best Cinematography at the\nMallorca Film Festival.\nAlongside his cinematography work, he is co-\nfounder of VICHO, a directing duo, and\ndifferent production companies over the last\n15 years."
+    }
+  ]
+}

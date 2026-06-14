@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W&V — Panel de Control</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style> body { font-family: 'Montserrat', sans-serif; } </style>
+</head>
+<body class="bg-[#FAF9F6] text-[#1A1A1A] p-4 md:p-12 lg:p-20 space-y-12">
+
+    <div class="max-w-4xl mx-auto border border-black p-6 bg-white flex justify-between items-center uppercase tracking-wildest text-xs font-bold select-none">
+        <span>W&V Studio ® CMS v1.7</span>
+        <a href="index.html" target="_blank" class="underline hover:text-gray-500">Ir a la Web ↗</a>
+    </div>
+
+    <!-- FORMULARIO 1: OBRAS -->
+    <div class="max-w-4xl mx-auto border border-black p-6 md:p-12 bg-white shadow-sm">
+        <h1 class="text-2xl font-black uppercase tracking-tight mb-8">🎬 Publicar Nueva Pieza Audiovisual</h1>
+        <form id="cmsForm" class="space-y-6">
+            <div class="bg-[#FAF9F6] p-6 border border-black grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div><label class="block text-xs uppercase font-bold mb-2">Sección</label><select name="seccion" class="w-full border border-black p-3 bg-white text-sm"><option value="destacados">Home</option><option value="portfolio">Portfolio</option></select></div>
+                <div><label class="block text-xs uppercase font-bold mb-2">Tipo</label><select name="tipo" class="w-full border border-black p-3 bg-white text-sm"><option value="video">Video</option><option value="image">Fotografía</option></select></div>
+                <div><label class="block text-xs uppercase font-bold mb-2">Proporción</label><select name="ratio" class="w-full border border-black p-3 bg-white text-sm"><option value="16:9">16:9</option><option value="9:16">9:16</option><option value="4:5">4:5</option></select></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div><label class="block text-xs uppercase font-bold mb-2">Tag</label><input type="text" name="tag" class="w-full border-b border-black p-2 bg-transparent text-sm uppercase" required></div>
+                <div><label class="block text-xs uppercase font-bold mb-2">Título</label><input type="text" name="titulo" class="w-full border-b border-black p-2 bg-transparent text-sm" required></div>
+            </div>
+            <div><label class="block text-xs uppercase font-bold mb-2">Descripción</label><textarea name="descripcion" rows="2" class="w-full border border-black p-3 bg-transparent text-sm resize-none" required></textarea></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div><label class="block text-xs uppercase font-bold mb-1">URL Previsualización</label><input type="url" name="previewSrc" class="w-full border-b border-black p-2 bg-transparent text-xs font-mono" required></div>
+                <div><label class="block text-xs uppercase font-bold mb-1">URL Caja de Luz</label><input type="url" name="lightboxSrc" class="w-full border-b border-black p-2 bg-transparent text-xs font-mono" required></div>
+            </div>
+            <button type="submit" class="w-full bg-black text-white p-4 uppercase font-bold text-sm hover:bg-zinc-800">Publicar Pieza →</button>
+        </form>
+    </div>
+
+    <!-- FORMULARIOS MODULARES DE INFO BLINDADOS -->
+    <div class="max-w-4xl mx-auto border border-black p-6 md:p-12 bg-white shadow-sm">
+        <h2 class="text-2xl font-black uppercase tracking-tight mb-2">📄 Contenidos de Info</h2>
+        <p class="text-xs text-gray-500 mb-8 uppercase tracking-wider">Modificá cada bloque por separado. El sistema fusionará los datos sin romper nada.</p>
+
+        <!-- Bloque A: Textos -->
+        <form id="infoTextosForm" class="border border-black p-6 bg-[#FAF9F6] space-y-4 mb-8">
+            <h3 class="text-xs uppercase tracking-widest font-black">// Textos y Manifiesto</h3>
+            <div><label class="block text-xs uppercase font-bold mb-2">Frase Destacada</label><input type="text" id="info-textoDestacado" class="w-full border border-black p-3 bg-white text-sm font-bold" required></div>
+            <div><label class="block text-xs uppercase font-bold mb-2">Manifiesto Conceptual</label><textarea id="info-textoManifiesto" rows="3" class="w-full border border-black p-3 bg-white text-sm resize-none" required></textarea></div>
+            <button type="submit" class="bg-black text-white px-4 py-3 uppercase font-bold text-[10px] hover:bg-zinc-800">Guardar Textos</button>
+        </form>
+
+        <!-- Bloque B: Logos -->
+        <form id="infoLogosForm" class="border border-black p-6 bg-[#FAF9F6] space-y-4 mb-8">
+            <h3 class="text-xs uppercase tracking-widest font-black">// Clientes y Marcas</h3>
+            <p class="text-[10px] text-zinc-600">URLs de logos vectoriales. Un link por línea. Alto sugerido: 80px.</p>
+            <textarea id="info-logos" rows="5" class="w-full border border-black p-3 bg-white font-mono text-xs focus:outline-none"></textarea>
+            <button type="submit" class="bg-black text-white px-4 py-3 uppercase font-bold text-[10px] hover:bg-zinc-800">Guardar Logos</button>
+        </form>
+
+        <!-- Bloque C: Servicios -->
+        <form id="infoServiciosForm" class="border border-black p-6 bg-[#FAF9F6] space-y-4 mb-8">
+            <h3 class="text-xs uppercase tracking-widest font-black">// Capabilities (4 Columnas)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="space-y-2"><span class="text-xs font-black">// 01</span><input type="text" id="serv-tit-0" class="w-full border border-zinc-300 p-2 text-xs font-bold bg-white"><textarea id="serv-desc-0" rows="2" class="w-full border border-zinc-300 p-2 text-xs bg-white resize-none"></textarea></div>
+                <div class="space-y-2"><span class="text-xs font-black">// 02</span><input type="text" id="serv-tit-1" class="w-full border border-zinc-300 p-2 text-xs font-bold bg-white"><textarea id="serv-desc-1" rows="2" class="w-full border border-zinc-300 p-2 text-xs bg-white resize-none"></textarea></div>
+                <div class="space-y-2"><span class="text-xs font-black">// 03</span><input type="text" id="serv-tit-2" class="w-full border border-zinc-300 p-2 text-xs font-bold bg-white"><textarea id="serv-desc-2" rows="2" class="w-full border border-zinc-300 p-2 text-xs bg-white resize-none"></textarea></div>
+                <div class="space-y-2"><span class="text-xs font-black">// 04</span><input type="text" id="serv-tit-3" class="w-full border border-zinc-300 p-2 text-xs font-bold bg-white"><textarea id="serv-desc-3" rows="2" class="w-full border border-zinc-300 p-2 text-xs bg-white resize-none"></textarea></div>
+            </div>
+            <button type="submit" class="bg-black text-white px-4 py-3 uppercase font-bold text-[10px] hover:bg-zinc-800">Guardar Servicios</button>
+        </form>
+
+        <!-- Bloque D: Crew -->
+        <form id="infoCrewForm" class="border border-black p-6 bg-[#FAF9F6] space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xs uppercase tracking-widest font-black">// Staff Técnico (Crew)</h3>
+                <button type="button" onclick="agregarIntegranteRow('', '', '', '')" class="bg-zinc-300 text-black text-[10px] px-3 py-1 font-bold uppercase hover:bg-zinc-400">+ Añadir Persona</button>
+            </div>
+            <div id="crewWrapper" class="space-y-4"></div>
+            <button type="submit" class="bg-black text-white px-4 py-3 uppercase font-bold text-[10px] hover:bg-zinc-800">Guardar Staff</button>
+        </form>
+    </div>
+
+    <!-- COLORES & REDES -->
+    <div class="max-w-4xl mx-auto border border-black p-6 md:p-12 bg-white shadow-sm grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+            <h3 class="text-sm font-black uppercase mb-4">🎨 Paletas de Color</h3>
+            <form id="colorForm" class="space-y-3">
+                <div class="flex items-center space-x-2 text-[10px] font-bold"><span class="w-8">#01</span><input type="color" name="claro_0" value="#FAF9F6" class="w-8 h-8"><input type="color" name="oscuro_0" value="#1A1A1A" class="w-8 h-8"></div>
+                <div class="flex items-center space-x-2 text-[10px] font-bold"><span class="w-8">#02</span><input type="color" name="claro_1" value="#E0E6ED" class="w-8 h-8"><input type="color" name="oscuro_1" value="#0A192F" class="w-8 h-8"></div>
+                <div class="flex items-center space-x-2 text-[10px] font-bold"><span class="w-8">#03</span><input type="color" name="claro_2" value="#F4F7F4" class="w-8 h-8"><input type="color" name="oscuro_2" value="#121B12" class="w-8 h-8"></div>
+                <div class="flex items-center space-x-2 text-[10px] font-bold"><span class="w-8">#04</span><input type="color" name="claro_3" value="#F2EFE9" class="w-8 h-8"><input type="color" name="oscuro_3" value="#2C221E" class="w-8 h-8"></div>
+                <button type="submit" class="w-full bg-zinc-900 text-white p-2 text-xs uppercase font-bold mt-2">Guardar Colores</button>
+            </form>
+        </div>
+        <div>
+            <h3 class="text-sm font-black uppercase mb-4">🔗 Redes Sociales</h3>
+            <form id="redesForm" class="space-y-3">
+                <input type="url" name="instagram" id="link-instagram" class="w-full border-b border-black p-1 text-xs bg-transparent" placeholder="Instagram URL">
+                <input type="url" name="behance" id="link-behance" class="w-full border-b border-black p-1 text-xs bg-transparent" placeholder="Behance URL">
+                <input type="url" name="linkedin" id="link-linkedin" class="w-full border-b border-black p-1 text-xs bg-transparent" placeholder="LinkedIn URL">
+                <input type="url" name="twitter" id="link-twitter" class="w-full border-b border-black p-1 text-xs bg-transparent" placeholder="X / Twitter URL">
+                <button type="submit" class="w-full bg-zinc-900 text-white p-2 text-xs uppercase font-bold">Guardar Redes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 🚨 URL DE PRODUCCIÓN CENTRALIZADA EN RENDER
+        const API_BASE = "https://wv-studio-api.onrender.com";
+
+        function agregarIntegranteRow(foto, nombre, cargo, bio) {
+            const wrapper = document.getElementById('crewWrapper');
+            const row = document.createElement('div');
+            row.className = "crew-item-row border border-zinc-400 p-4 bg-white grid grid-cols-1 md:grid-cols-3 gap-4";
+            row.innerHTML = `
+                <div class="space-y-2 col-span-1 md:col-span-2">
+                    <input type="text" value="${nombre}" class="crew-nombre w-full border-b border-zinc-400 text-xs font-bold p-1" placeholder="Nombre" required>
+                    <input type="text" value="${cargo}" class="crew-cargo w-full border-b border-zinc-400 text-xs p-1" placeholder="Cargo" required>
+                    <input type="url" value="${foto}" class="crew-foto w-full border-b border-zinc-400 text-[10px] font-mono p-1" placeholder="URL Foto" required>
+                </div>
+                <div class="flex flex-col justify-between">
+                    <textarea class="crew-bio w-full border border-zinc-300 p-2 text-xs resize-none flex-grow" rows="3" placeholder="Bio..." required>${bio}</textarea>
+                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="text-red-600 text-[9px] font-bold uppercase mt-2 hover:underline">Remover</button>
+                </div>`;
+            wrapper.appendChild(row);
+        }
+
+        async function cargarDatos() {
+            try {
+                const resInfo = await fetch(`${API_BASE}/api/info`);
+                const info = await resInfo.json();
+                if (info) {
+                    document.getElementById('info-textoDestacado').value = info.textoDestacado || '';
+                    document.getElementById('info-textoManifiesto').value = info.textoManifiesto || '';
+                    
+                    if (info.logos && Array.isArray(info.logos)) {
+                        document.getElementById('info-logos').value = info.logos.join('\n');
+                    } else {
+                        document.getElementById('info-logos').value = '';
+                    }
+
+                    if (info.servicios && Array.isArray(info.servicios)) { 
+                        info.servicios.forEach((s, i) => { 
+                            if(document.getElementById(`serv-tit-${i}`)) document.getElementById(`serv-tit-${i}`).value = s.titulo || ''; 
+                            if(document.getElementById(`serv-desc-${i}`)) document.getElementById(`serv-desc-${i}`).value = s.descripcion || ''; 
+                        }); 
+                    }
+
+                    if (info.crew && Array.isArray(info.crew)) { 
+                        document.getElementById('crewWrapper').innerHTML = ''; 
+                        info.crew.forEach(c => agregarIntegranteRow(c.foto, c.nombre, c.cargo, c.bio)); 
+                    }
+                }
+
+                // Paletas Cromáticas
+                const resColores = await fetch(`${API_BASE}/api/colores`);
+                const paletas = await resColores.json();
+                if(Array.isArray(paletas)){
+                    paletas.forEach((p, i) => {
+                        const ic = document.querySelector(`input[name="claro_${i}"]`);
+                        const io = document.querySelector(`input[name="oscuro_${i}"]`);
+                        if(ic && p.claro) ic.value = p.claro; if(io && p.oscuro) io.value = p.oscuro;
+                    });
+                }
+
+                // Redes
+                const resRedes = await fetch(`${API_BASE}/api/redes`);
+                const redes = await resRedes.json();
+                if (redes) {
+                    if (redes.instagram) document.getElementById('link-instagram').value = redes.instagram;
+                    if (redes.behance) document.getElementById('link-behance').value = redes.behance;
+                    if (redes.linkedin) document.getElementById('link-linkedin').value = redes.linkedin;
+                    if (redes.twitter) document.getElementById('link-twitter').value = redes.twitter;
+                }
+            } catch (e) { 
+                console.error("Freno de seguridad de precarga activo:", e); 
+            }
+        }
+
+        async function guardarBloqueInfo(payload, nombreBloque) {
+            try {
+                const res = await fetch(`${API_BASE}/api/info`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                if (res.ok) alert(`¡${nombreBloque} actualizado con éxito!`);
+            } catch (e) { alert('Error conectando al servidor de Render.'); }
+        }
+
+        document.getElementById('infoTextosForm').addEventListener('submit', (e) => { e.preventDefault(); guardarBloqueInfo({ textoDestacado: document.getElementById('info-textoDestacado').value, textoManifiesto: document.getElementById('info-textoManifiesto').value }, 'Textos'); });
+        document.getElementById('infoLogosForm').addEventListener('submit', (e) => { e.preventDefault(); guardarBloqueInfo({ logos: document.getElementById('info-logos').value.split('\n').map(l=>l.trim()).filter(l=>l!=="") }, 'Logos'); });
+        document.getElementById('infoServiciosForm').addEventListener('submit', (e) => { e.preventDefault(); const s = []; for(let i=0; i<4; i++) s.push({ titulo: document.getElementById(`serv-tit-${i}`).value, descripcion: document.getElementById(`serv-desc-${i}`).value }); guardarBloqueInfo({ servicios: s }, 'Services'); });
+        document.getElementById('infoCrewForm').addEventListener('submit', (e) => { e.preventDefault(); const c = []; document.querySelectorAll('.crew-item-row').forEach(row => c.push({ nombre: row.querySelector('.crew-nombre').value, cargo: row.querySelector('.crew-cargo').value, foto: row.querySelector('.crew-foto').value, bio: row.querySelector('.crew-bio').value })); guardarBloqueInfo({ crew: c }, 'Staff Técnico (Crew)'); });
+
+        document.getElementById('cmsForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); const data = Object.fromEntries(new FormData(e.target));
+            const res = await fetch(`${API_BASE}/api/proyectos`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            if (res.ok) { alert('¡Pieza publicada con éxito!'); e.target.reset(); }
+        });
+
+        document.getElementById('colorForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); const f = new FormData(e.target); const p = []; for(let i=0; i<4; i++) p.push({ claro: f.get(`claro_${i}`), oscuro: f.get(`oscuro_${i}`) });
+            await fetch(`${API_BASE}/api/colores`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(p) }); alert('¡Paletas de colores guardadas!');
+        });
+        
+        document.getElementById('redesForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); const p = Object.fromEntries(new FormData(e.target).entries());
+            await fetch(`${API_BASE}/api/redes`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(p) }); alert('¡Enlaces de redes sociales guardados!');
+        });
+
+        cargarDatos();
+    </script>
+</body>
+</html>

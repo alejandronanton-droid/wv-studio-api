@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W&V — Wide and Vertical</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Montserrat', sans-serif; }
+        .wide-container { width: 100%; height: auto; background-color: #000000; overflow: hidden; display: flex; align-items: flex-end; padding: 40px 0; cursor: pointer; }
+        #kinetic-wrapper { display: flex; white-space: nowrap; width: max-content; transform-origin: left bottom; font-weight: 900; transform: scaleX(var(--scale-reposo, 1)); transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1), font-weight 0.65s cubic-bezier(0.25, 1, 0.5, 1); }
+        .wide-container:hover #kinetic-wrapper { font-weight: 200; transform: scaleX(var(--scale-hover, 1)); }
+        .word-wide, .word-vertical { font-size: 24vw; color: #FAF9F6; line-height: 0.75; text-transform: uppercase; letter-spacing: -0.03em; display: inline-block; }
+        .menu-link { font-weight: 900; transition: font-weight 0.4s cubic-bezier(0.25, 1, 0.5, 1), letter-spacing 0.4s ease; cursor: pointer; }
+        .menu-link:hover { font-weight: 100; letter-spacing: 0.02em; }
+        @keyframes marquee-infinite { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .marquee-track { display: flex; width: max-content; animation: marquee-infinite 150s linear infinite; }
+
+        /* MAQUETADO CSS NATIVO PARA LOS LATERALES ASCII */
+        .ascii-gutter-panel {
+            position: fixed; top: 0; bottom: 0; width: calc((100vw - 1200px) / 2);
+            display: none; z-index: 0; overflow: hidden; padding: 0 1rem;
+            user-select: none; pointer-events: none;
+        }
+        .ascii-left { left: 0; } .ascii-right { right: 0; }
+        @media (min-width: 1200px) { .ascii-gutter-panel { display: block !important; } }
+    </style>
+</head>
+<body class="bg-[#FAF9F6] text-[#1A1A1A] antialiased overflow-x-hidden">
+
+    <!-- 🤖 PANELES ASCII PROCEDIMENTALES -->
+    <pre class="ascii-gutter-panel ascii-left font-mono font-black text-[11px] leading-none tracking-wildest opacity-15 whitespace-pre"></pre>
+    <pre class="ascii-gutter-panel ascii-right font-mono font-black text-[11px] leading-none tracking-wildest opacity-15 whitespace-pre"></pre>
+
+    <!-- CASCO MAESTRO DE ARQUITECTURA (1200PX CENTRADO) -->
+    <div class="max-w-[1200px] mx-auto border-x border-black min-h-screen flex flex-col justify-between relative bg-[#FAF9F6] main-site-wrapper z-10">
+
+        <!-- HEADER INSTITUCIONAL UNIFICADO -->
+        <header class="border-b border-black grid grid-cols-2 md:grid-cols-4 uppercase tracking-wider text-sm sticky top-0 bg-[#FAF9F6] z-50 select-none font-medium">
+            <button onclick="navegarView('home', 'top')" class="p-5 border-r border-black font-bold flex items-center hover:bg-black hover:text-white transition-all duration-200 text-left focus:outline-none">W&V ®</button>
+            <div class="p-5 border-r border-black hidden md:flex items-center text-gray-500">Latam al mundo</div>
+            <button onclick="navegarView('home', 'contact')" class="p-5 border-r border-black hidden md:flex items-center hover:bg-black hover:text-white transition-all duration-200 text-left focus:outline-none">Contacto ↓</button>
+            <button id="menu-open" class="p-5 flex items-center justify-end md:justify-center font-bold hover:bg-black hover:text-white transition-all duration-200 focus:outline-none uppercase tracking-wider text-sm">MENÚ</button>
+        </header>
+
+        <!-- MENÚ DESPLEGABLE TOTAL ADAPTATIVO -->
+        <div id="full-screen-menu" class="fixed inset-y-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] bg-[#000000] text-[#FAF9F6] z-[100] translate-y-[-100%] transition-transform duration-500 ease-in-out flex flex-col justify-between overflow-hidden border-x border-black">
+            <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none flex items-center select-none opacity-95"><div class="marquee-track"><div class="text-[#131313] font-black uppercase text-[135vh] tracking-tighter leading-none whitespace-nowrap">wide&amp;vertical wide&amp;vertical wide&amp;vertical wide&amp;vertical&nbsp;</div><div class="text-[#131313] font-black uppercase text-[135vh] tracking-tighter leading-none whitespace-nowrap">wide&amp;vertical wide&amp;vertical wide&amp;vertical wide&amp;vertical&nbsp;</div></div></div>
+            <div class="relative z-10 border-b border-zinc-800 grid grid-cols-2 md:grid-cols-4 uppercase tracking-wider text-sm w-full select-none menu-internal-header"><div class="p-5 border-r border-zinc-800 font-bold flex items-center">W&V ®</div><div class="p-5 border-r border-zinc-800 hidden md:flex items-center text-zinc-600">Menú</div><div class="p-5 border-r border-zinc-800 hidden md:flex items-center text-zinc-600">Studio / 2026</div><button id="menu-close" class="p-5 flex items-center justify-end md:justify-center font-bold text-[#FAF9F6] hover:bg-[#FAF9F6] hover:text-[#000000] transition-all duration-200 focus:outline-none text-right md:text-center">Cerrar ✕</button></div>
+            
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center w-full px-6 md:px-20 my-auto space-y-12 md:space-y-0">
+                <div class="flex flex-col space-y-2 md:space-y-4">
+                    <span id="menu-lnk-home" onclick="navegarView('home', 'top')" class="menu-link text-3xl md:text-6xl uppercase tracking-tighter flex items-center">01. Inicio <span class="arrow-indicator hidden ml-4 md:ml-8 flex items-center"><svg class="h-[1em] w-[1em] shrink-0 stroke-current text-white" fill="none" stroke-width="1" viewBox="0 0 24 24"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg></span></span>
+                    <span id="menu-lnk-portfolio" onclick="navegarView('portfolio', '')" class="menu-link text-3xl md:text-6xl uppercase tracking-tighter flex items-center">02. Portfolio <span class="arrow-indicator hidden ml-4 md:ml-8 flex items-center"><svg class="h-[1em] w-[1em] shrink-0 stroke-current text-white" fill="none" stroke-width="1" viewBox="0 0 24 24"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg></span></span>
+                    <span id="menu-lnk-info" onclick="navegarView('info', '')" class="menu-link text-3xl md:text-6xl uppercase tracking-tighter flex items-center">03. Info <span class="arrow-indicator hidden ml-4 md:ml-8 flex items-center"><svg class="h-[1em] w-[1em] shrink-0 stroke-current text-white" fill="none" stroke-width="1" viewBox="0 0 24 24"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg></span></span>
+                    <span id="menu-lnk-contact" onclick="navegarView('home', 'contact')" class="menu-link text-3xl md:text-6xl uppercase tracking-tighter flex items-center">04. Contacto <span class="arrow-indicator hidden ml-4 md:ml-8 flex items-center"><svg class="h-[1em] w-[1em] shrink-0 stroke-current text-white" fill="none" stroke-width="1" viewBox="0 0 24 24"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg></span></span>
+                </div>
+                
+                <div class="relative z-10 flex flex-col items-start md:items-end w-full md:w-auto text-left md:text-right space-y-3 md:space-y-4 uppercase tracking-wildest text-xs md:text-sm font-medium text-zinc-400 select-none">
+                    <span class="text-[10px] text-zinc-600 block mb-1 tracking-wildest">// Conectemos</span>
+                    <a href="" id="menu-social-instagram" target="_blank" class="social-link-item hidden">Instagram ↗</a>
+                    <a href="" id="menu-social-behance" target="_blank" class="social-link-item hidden">Behance ↗</a>
+                    <a href="" id="menu-social-linkedin" target="_blank" class="social-link-item hidden">LinkedIn ↗</a>
+                    <a href="" id="menu-social-twitter" target="_blank" class="social-link-item hidden">X / Twitter ↗</a>
+                </div>
+            </div>
+            <div class="relative z-10 p-6 md:p-10 border-t border-zinc-800 flex justify-between items-center uppercase tracking-wildest text-xs text-zinc-500 select-none"><span>W&V Studio © 2026</span><span class="hidden md:inline">Desafiando proporciones</span></div>
+        </div>
+
+        <!-- VISTAS SPA -->
+        <!-- 🏠 VISTA 01: HOME -->
+        <div id="view-home" class="w-full">
+            <main class="w-full">
+                <div class="wide-container"><div id="kinetic-wrapper"><span class="word-wide" id="w-text">WIDE</span><span class="word-vertical" id="v-text">&amp;VERTICAL</span></div></div>
+                <div style="position: absolute; visibility: hidden; pointer-events: none; white-space: nowrap; top: 0; left: 0;"><span id="measure-wide-black" style="font-family: 'Montserrat'; font-size: 24vw; font-weight: 900; letter-spacing: -0.03em; text-transform: uppercase;">WIDE</span><span id="measure-total-thin" style="font-family: 'Montserrat'; font-size: 24vw; font-weight: 200; letter-spacing: -0.03em; text-transform: uppercase;">WIDE&amp;VERTICAL</span></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 border-t border-black">
+                    <div class="p-5 md:p-10 border-r border-black flex flex-col justify-end min-h-[35vh]"><p class="text-xl max-w-md font-light leading-relaxed">La mejor decisión de producción es la que nadie nota. Porque lo que se ve es exactamente lo que tenía que ser... <br><strong>Somos W&amp;V</strong></p></div>
+                    <div id="portfolio-block" class="relative bg-[#1A1A1A] text-white p-5 md:p-10 flex flex-col justify-between min-h-[35vh] overflow-hidden"><img id="portfolio-bg" src="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; mix-blend-mode: luminosity; transition: opacity 0.5s ease; pointer-events: none; z-index: 0;"><span class="text-xs uppercase tracking-wildest text-gray-400 z-10">// Featured Work</span><div class="space-y-4 my-6 z-10"><div class="portfolio-item border-b border-gray-800 py-3 cursor-pointer transition-all hover:border-white" data-img="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600"><h3 class="text-2xl font-bold uppercase tracking-wide">01. Branding Identidad</h3></div><div class="portfolio-item border-b border-gray-800 py-3 cursor-pointer transition-all hover:border-white" data-img="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=600"><h3 class="text-2xl font-bold uppercase tracking-wide">02. Desarrollo Web Fullstack</h3></div></div><span onclick="navegarView('portfolio', '')" class="text-sm uppercase underline tracking-wider text-gray-300 hover:text-white z-10 cursor-pointer">Ver portafolio completo →</span></div>
+                </div>
+                <section id="featured-projects" class="bg-[#FAF9F6] select-none w-full"></section>
+            </main>
+            <footer id="contact" class="grid grid-cols-1 md:grid-cols-2 bg-white border-t border-black h-[40vh] overflow-hidden footer-estructura"><div class="p-5 md:p-10 border-r border-b md:border-b-0 border-black bg-[#FAF9F6] flex flex-col justify-between h-[40vh] contact-left-pane"><div><span class="text-xs uppercase tracking-wildest text-gray-500">// Hablemos</span><h2 class="text-4xl md:text-6xl font-bold uppercase tracking-tight my-8">¿Tenés un proyecto en mente?</h2></div></div><div class="p-6 md:p-10 bg-white h-[40vh] contact-right-pane"><form id="contactForm" class="h-full flex flex-col justify-between"><div class="space-y-4"><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="block text-[10px] uppercase font-bold mb-1">Nombre</label><input type="text" name="nombre" class="w-full border-b border-black py-1 focus:outline-none bg-transparent text-sm" required></div><div><label class="block text-[10px] uppercase font-bold mb-1">Email</label><input type="email" name="email" class="w-full border-b border-black py-1 focus:outline-none bg-transparent text-sm" required></div></div><div><label class="block text-[10px] uppercase font-bold mb-1">Mensaje</label><textarea rows="1" name="mensaje" class="w-full border-b border-black py-1 focus:outline-none bg-transparent resize-none text-sm" required></textarea></div></div><input type="submit" value="Enviar Mensaje →"></form></div></footer>
+        </div>
+
+        <!-- 📂 VISTA 02: PORTFOLIO -->
+        <div id="view-portfolio" class="hidden w-full"><main class="w-full"><section id="portfolio-grid" class="bg-[#FAF9F6] select-none min-h-[40vh] w-full"></section></main></div>
+
+        <!-- 🎨 VISTA 03: INFO -->
+        <div id="view-info" class="hidden w-full info-block-bg">
+            <main class="w-full">
+                <div class="p-5 md:p-10 border-t border-black"><h2 id="dyn-info-destacado" class="text-3xl md:text-5xl font-black uppercase tracking-tight leading-none max-w-4xl"></h2></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 border-t border-black">
+                    <div class="p-5 md:p-10 md:border-r border-black font-bold uppercase tracking-wildest text-xs opacity-60">// Manifiesto</div>
+                    <div class="col-span-1 md:col-span-3 p-5 md:p-10"><p id="dyn-info-manifiesto" class="text-xl md:text-2xl font-light leading-relaxed max-w-3xl"></p></div>
+                </div>
+
+                <div class="border-t border-black"><div class="p-5 font-bold uppercase tracking-wildest text-xs opacity-60 border-b border-black">// CLIENTES / PARTNERS</div><div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 info-clients-grid" id="dyn-info-logos-container"></div></div>
+                <div class="border-t border-black"><div class="p-5 font-bold uppercase tracking-wildest text-xs opacity-60 border-b border-black">// CAPABILITIES / SERVICIOS</div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" id="dyn-info-servicios-container"></div></div>
+                <div class="border-t border-black"><div class="p-5 font-bold uppercase tracking-wildest text-xs opacity-60 border-b border-black">// CREW</div><div class="grid grid-cols-1 md:grid-cols-2" id="dyn-info-crew-container"></div></div>
+            </main>
+        </div>
+
+        <!-- ZÓCALO -->
+        <div class="grid grid-cols-2 md:grid-cols-4 bg-[#FAF9F6] text-[#1A1A1A] border-t border-black uppercase tracking-wider text-xs font-bold select-none footer-zocalo w-full">
+            <div class="p-5 border-r border-black flex items-center">W&V © 2026</div><span onclick="navegarView('home', 'top')" class="p-5 border-r border-black hidden md:flex items-center hover:bg-black hover:text-white transition-all duration-200 cursor-pointer">01. INICIO</span><span onclick="navegarView('portfolio', '')" class="p-5 border-r border-black hidden md:flex items-center hover:bg-black hover:text-white transition-all duration-200 cursor-pointer">02. PORTFOLIO</span><span onclick="navegarView('home', 'contact')" class="p-5 flex items-center justify-end md:justify-center hover:bg-black hover:text-white transition-all duration-200 w-full h-full text-right md:text-center cursor-pointer">03. CONTACTO ↓</span>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox-modal" class="fixed inset-0 bg-black/60 z-[200] hidden flex items-center justify-center p-4 md:p-10 select-none"><button id="lightbox-close" class="absolute top-5 right-5 text-[#FAF9F6] text-3xl font-light hover:text-zinc-400 focus:outline-none z-[210] cursor-pointer">✕</button><button id="lightbox-prev" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-[#FAF9F6] hover:text-zinc-400 focus:outline-none z-[210] cursor-pointer p-4"><svg class="w-8 h-8 stroke-current" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg></button><button id="lightbox-next" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-[#FAF9F6] hover:text-zinc-400 focus:outline-none z-[210] cursor-pointer p-4"><svg class="w-8 h-8 stroke-current" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg></button><div id="lightbox-content" class="w-full h-full flex items-center justify-center overflow-hidden pointer-events-auto"></div></div>
+
+    <script>
+        // 🚨 URL DE PRODUCCIÓN CENTRALIZADA EN RENDER
+        const API_BASE = "https://wv-studio-api.onrender.com";
+
+        let VISTA_ACTUAL_INDICATOR = 'home';
+
+        // =========================================================================
+        // 🎨 MOTOR CROMÁTICO
+        // =========================================================================
+        async function aplicarPaletaDinamicaYRedes() {
+            try {
+                const resColors = await fetch(`${API_BASE}/api/colores`);
+                const paletas = await resColors.json();
+                if(paletas && paletas.length > 0) {
+                    let index = parseInt(localStorage.getItem('wv_palette_idx') || '0', 10);
+                    const palette = paletas[index % paletas.length];
+                    localStorage.setItem('wv_palette_idx', index + 1);
+                    
+                    const style = document.createElement('style');
+                    style.innerHTML = `
+                        :root { --claro: ${palette.claro}; --oscuro: ${palette.oscuro}; }
+                        body { background-color: var(--claro) !important; color: var(--oscuro) !important; }
+                        
+                        .main-site-wrapper { border-color: var(--oscuro) !important; background-color: var(--claro) !important; }
+                        header, .footer-zocalo, .footer-estructura > div, .home-text-card, .portfolio-text-card, .info-block-bg > main > div { background-color: var(--claro) !important; border-color: var(--oscuro) !important; color: var(--oscuro) !important; }
+                        header *, .footer-zocalo *, .home-text-card *, .portfolio-text-card * { border-color: var(--oscuro) !important; color: var(--oscuro) !important; }
+                        header button:hover, header a:hover, .footer-zocalo span:hover, .footer-zocalo a:hover { background-color: var(--oscuro) !important; color: var(--claro) !important; }
+                        
+                        #full-screen-menu, #portfolio-block { background-color: var(--oscuro) !important; color: var(--claro) !important; border-color: var(--oscuro) !important; }
+                        #full-screen-menu * { border-color: var(--claro) !important; }
+                        #full-screen-menu .menu-internal-header { background-color: var(--oscuro) !important; border-color: var(--claro) !important; }
+                        #full-screen-menu button#menu-close:hover { background-color: var(--claro) !important; color: var(--oscuro) !important; }
+                        
+                        .marquee-track div { color: var(--claro) !important; opacity: 0.03 !important; }
+                        .wide-container { background-color: var(--oscuro) !important; }
+                        .word-wide, .word-vertical { color: var(--claro) !important; }
+                        
+                        #contactForm input, #contactForm textarea { border-color: var(--oscuro) !important; color: var(--oscuro) !important; }
+                        #contactForm input[type="submit"] { background-color: var(--oscuro) !important; color: var(--claro) !important; border: none; padding: 14px; text-transform: uppercase; font-size: 13px; font-weight: bold; width:100%; cursor: pointer; transition: opacity 0.2s; }
+                        
+                        .info-block-bg, .info-block-bg div { border-color: var(--oscuro) !important; }
+                        .info-team-frame { background-color: var(--claro) !important; color: var(--oscuro) !important; transition: all 0.4s; }
+                        .info-team-frame:hover { background-color: var(--oscuro) !important; color: var(--claro) !important; }
+                        .info-team-frame:hover * { color: var(--claro) !important; }
+                        .info-clients-grid img { grayscale: 100% !important; mix-blend-mode: luminosity !important; opacity: 0.6; transition: all 0.3s; }
+                        .info-clients-grid div:hover img { grayscale: 0% !important; mix-blend-mode: normal !important; opacity: 1; transform: scale(1.05); }
+                        
+                        .home-media-row, .portfolio-media-card { border-color: var(--oscuro) !important; }
+                        .home-media-row > div, .portfolio-media-card > div { border-color: var(--oscuro) !important; }
+                        .home-media-row:hover .home-text-card, .portfolio-media-card:hover .portfolio-text-card { background-color: var(--oscuro) !important; color: var(--claro) !important; }
+                        .home-media-row:hover .home-text-card *, .portfolio-media-card:hover .portfolio-text-card * { color: var(--claro) !important; }
+                        
+                        .ascii-gutter-panel { background-color: var(--claro) !important; }
+                        pre.ascii-gutter-panel { color: var(--oscuro) !important; }
+                        
+                        .social-link-item { color: #ffffff !important; font-weight: 500; }
+                    `;
+                    document.head.appendChild(style);
+                }
+
+                const resRedes = await fetch(`${API_BASE}/api/redes`);
+                const redes = await resRedes.json();
+                const inst = document.getElementById('menu-social-instagram'), beh = document.getElementById('menu-social-behance'), lnk = document.getElementById('menu-social-linkedin'), twt = document.getElementById('menu-social-twitter');
+                if (redes.instagram?.trim()) { inst.href = redes.instagram.trim(); inst.classList.remove('hidden'); } else { inst.classList.add('hidden'); }
+                if (redes.behance?.trim()) { beh.href = redes.behance.trim(); beh.classList.remove('hidden'); } else { beh.classList.add('hidden'); }
+                if (redes.linkedin?.trim()) { lnk.href = redes.linkedin.trim(); lnk.classList.remove('hidden'); } else { lnk.classList.add('hidden'); }
+                if (redes.twitter?.trim()) { twt.href = redes.twitter.trim(); twt.classList.remove('hidden'); } else { twt.classList.add('hidden'); }
+            } catch(e) { console.error(e); }
+        }
+        aplicarPaletaDinamicaYRedes();
+
+        // =========================================================================
+        // 🎛️ SPA ENGINE (Localizador Vectorial de Flecha Delgada)
+        // =========================================================================
+        let ARCHIVO_DESTACADOS = []; let ARCHIVO_PORTFOLIO = []; let POOL_LOGOS = [];
+
+        function actualizarFlechaMenu(viewId) {
+            document.querySelectorAll('.arrow-indicator').forEach(el => el.classList.add('hidden'));
+            const targetArrow = document.querySelector(`#menu-lnk-${viewId} .arrow-indicator`);
+            if (targetArrow) targetArrow.classList.remove('hidden');
+        }
+
+        function navegarView(viewName, elementId) {
+            cerrarMenu();
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-portfolio').classList.add('hidden');
+            document.getElementById('view-info').classList.add('hidden');
+            
+            VISTA_ACTUAL_INDICATOR = (viewName === 'home' && elementId === 'contact') ? 'contact' : viewName;
+
+            if (viewName === 'home') {
+                document.getElementById('view-home').classList.remove('hidden');
+                setTimeout(recalcularEscalas, 10);
+                if (elementId === 'top') window.scrollTo({ top: 0, behavior: 'smooth' });
+                else if (elementId) setTimeout(() => { document.getElementById(elementId)?.scrollIntoView({ behavior: 'smooth' }); }, 40);
+            } else {
+                document.getElementById(`view-${viewName}`).classList.remove('hidden');
+                window.scrollTo({ top: 0 });
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.pathname.includes('portfolio.html')) {
+                document.getElementById('view-home').classList.add('hidden');
+                document.getElementById('view-portfolio').classList.remove('hidden');
+                VISTA_ACTUAL_INDICATOR = 'portfolio';
+            }
+        });
+
+        async function cargarContenidosDesdeBackend() {
+            try {
+                const response = await fetch(`${API_BASE}/api/proyectos`);
+                const todosLosProyectos = await response.json();
+                ARCHIVO_DESTACADOS = todosLosProyectos.filter(p => p.seccion === "destacados");
+                ARCHIVO_PORTFOLIO = todosLosProyectos.filter(p => p.seccion === "portfolio");
+                renderizarDestacados(); renderizarPortfolio();
+
+                const resInfo = await fetch(`${API_BASE}/api/info`);
+                const infoData = await resInfo.json();
+                if (infoData) {
+                    document.getElementById('dyn-info-destacado').textContent = infoData.textoDestacado;
+                    document.getElementById('dyn-info-manifiesto').textContent = infoData.textoManifiesto;
+                    
+                    POOL_LOGOS = (infoData.logos || []).map(l => ({ src: l.trim(), alt: "Cliente" }));
+                    const logoContainer = document.getElementById('dyn-info-logos-container');
+                    logoContainer.innerHTML = '';
+                    POOL_LOGOS.slice(0, 6).forEach((logo, idx) => {
+                        const lastBorder = idx === 5 ? '' : 'border-r';
+                        logoContainer.innerHTML += `<div class="p-6 ${lastBorder} border-b border-black flex items-center justify-center h-28"><img id="client-img-${idx}" src="${logo.src}" class="max-h-8 w-auto max-w-[80%] object-contain transition-opacity duration-500" alt="Cliente"></div>`;
+                    });
+
+                    const servContainer = document.getElementById('dyn-info-servicios-container');
+                    servContainer.innerHTML = '';
+                    (infoData.servicios || []).forEach((s, idx) => {
+                        const borderR = idx === 3 ? '' : (idx === 1 ? 'sm:border-r-0 lg:border-r' : 'border-r');
+                        const borderB = idx < 2 ? 'border-b' : 'border-b lg:border-b-0';
+                        servContainer.innerHTML += `
+                            <div class="p-5 md:p-8 ${borderB} ${borderR} border-black min-h-[25vh] flex flex-col justify-start space-y-4">
+                                <span class="font-black text-lg">// 0${idx+1}</span>
+                                <div class="space-y-2"><h4 class="font-bold uppercase tracking-wide">${s.titulo}</h4><p class="text-xs font-light leading-relaxed opacity-80">${s.descripcion}</p></div>
+                            </div>`;
+                    });
+
+                    const crewContainer = document.getElementById('dyn-info-crew-container');
+                    crewContainer.innerHTML = '';
+                    (infoData.crew || []).forEach((c, idx) => {
+                        const borderR = idx % 2 === 0 ? 'md:border-r' : '';
+                        crewContainer.innerHTML += `
+                            <div class="border-b md:border-b-0 ${borderR} border-black flex flex-col justify-between group/team">
+                                <div class="h-[45vh] bg-zinc-900 overflow-hidden relative"><img src="${c.foto.trim()}" class="w-full h-full object-cover grayscale mix-blend-luminosity hover:grayscale-0 hover:mix-blend-normal transition-all duration-700"></div>
+                                <div onclick="toggleBio('cv-dyn-crew-${idx}')" class="info-team-frame p-5 md:p-8 flex flex-col justify-between flex-grow cursor-pointer select-none">
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between items-baseline"><h3 class="text-xl font-bold uppercase tracking-tight">${c.nombre}</h3><span class="text-xs font-medium opacity-60 uppercase">// ${c.cargo}</span></div>
+                                        <div id="cv-dyn-crew-${idx}" class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out font-light text-xs leading-relaxed text-justify opacity-90">${c.bio}</div>
+                                    </div>
+                                </div>
+                            </div>`;
+                    });
+                }
+            } catch (error) { console.error(error); }
+        }
+
+        function toggleBio(id) {
+            const t = document.getElementById(id);
+            if (t.style.maxHeight === '0px' || !t.style.maxHeight) { t.style.maxHeight = '300px'; t.classList.add('mt-4'); } 
+            else { t.style.maxHeight = '0px'; setTimeout(() => { t.classList.remove('mt-4'); }, 500); }
+        }
+
+        function renderizarDestacados() {
+            const container = document.getElementById('featured-projects'); container.innerHTML = '';
+            ARCHIVO_DESTACADOS.forEach((proy, index) => {
+                const esInvertido = index % 2 !== 0; const clean = proy.previewSrc.trim().replace('/public/', '/');
+                const mediaHTML = `<div class="col-span-1 md:col-span-3 overflow-hidden bg-zinc-900 h-[40vh] ${!esInvertido ? 'border-r border-black' : ''}">${proy.tipo === 'video' ? `<video src="${clean}" class="w-full h-full object-cover transition-transform duration-1000" autoplay muted loop playsinline></video>` : `<img src="${clean}" class="w-full h-full object-cover">`}</div>`;
+                const textHTML = `<div class="home-text-card col-span-1 md:col-span-1 p-4 md:p-8 flex flex-col justify-end bg-[#FAF9F6] h-[40vh] transition-colors duration-300 overflow-hidden ${esInvertido ? 'border-r border-black' : ''}"><div class="space-y-1"><span class="text-[9px] uppercase tracking-wildest opacity-60 font-semibold block">// DESTACADOS / ${proy.tag}</span><h3 class="text-lg md:text-2xl font-bold uppercase tracking-tight leading-none">${proy.titulo}</h3><p class="text-xs opacity-80 font-light pt-1 hidden sm:block">${proy.descripcion}</p></div></div>`;
+                const row = document.createElement('div'); row.className = "home-media-row grid grid-cols-2 md:grid-cols-4 border-t border-black group cursor-pointer project-media-card h-[40vh] overflow-hidden"; row.setAttribute('data-index', index);
+                row.innerHTML = esInvertido ? textHTML + mediaHTML : mediaHTML + textHTML; container.appendChild(row);
+            });
+            container.querySelectorAll('video').forEach(vid => { vid.setAttribute('muted', 'muted'); vid.muted = true; vid.playsInline = true; vid.load(); vid.play().catch(e => {}); });
+        }
+
+        function renderizarPortfolio() {
+            const grid = document.getElementById('portfolio-grid'); grid.innerHTML = '';
+            let hC = 0; let vC = 0;
+            ARCHIVO_PORTFOLIO.forEach((proy, globalIndex) => {
+                const esV = (proy.ratio === "9:16" || proy.ratio === "4:5"); let esInvertido = false; let mediaHTML = '', textHTML = ''; const clean = proy.previewSrc.trim().replace('/public/', '/');
+                if (!esV) {
+                    esInvertido = hC % 2 !== 0; hC++;
+                    mediaHTML = `<div class="col-span-1 md:col-span-3 overflow-hidden bg-zinc-900 h-[40vh] border-black ${!esInvertido ? 'border-r border-black' : ''}">${proy.tipo === 'video' ? `<video src="${clean}" class="w-full h-full object-cover object-center transition-transform duration-1000" autoplay muted loop playsinline></video>` : `<img class="w-full h-full object-cover" src="${clean}">`}</div>`;
+                    textHTML = `<div class="portfolio-text-card col-span-1 md:col-span-1 p-4 md:p-8 flex flex-col justify-end h-[40vh] border-black ${esInvertido ? 'border-r border-black' : ''} transition-colors duration-300 overflow-hidden"><div class="space-y-1"><span class="text-[9px] uppercase tracking-wildest opacity-60 font-semibold block">// ARCHIVO / ${proy.tag}</span><h3 class="text-lg md:text-2xl font-bold uppercase tracking-tight leading-none">${proy.titulo}</h3><p class="text-xs opacity-80 font-light pt-1 hidden sm:block">${proy.descripcion}</p></div></div>`;
+                } else {
+                    esInvertido = vC % 2 !== 0; vC++;
+                    // 🔥 CORRECCIÓN: Se ajustó 'cleanPreview' a 'clean' para evitar variables indefinidas
+                    mediaHTML = `<div class="col-span-1 md:col-span-1 overflow-hidden bg-zinc-900 h-[40vh] border-black ${!esInvertido ? 'border-r border-black' : ''}">${proy.tipo === 'video' ? `<video src="${clean}" class="w-full h-full object-cover" autoplay muted loop playsinline></video>` : `<img class="w-full h-full object-cover" src="${clean}">`}</div>`;
+                    textHTML = `<div class="portfolio-text-card col-span-1 md:col-span-3 p-8 md:p-12 flex flex-col justify-end h-[40vh] border-black ${esInvertido ? 'border-r border-black' : ''} transition-colors duration-300 overflow-hidden"><div class="space-y-2"><span class="text-[10px] uppercase font-bold block">// MODULAR / ${proy.ratio}</span><h3 class="text-xl md:text-4xl font-bold uppercase tracking-tight leading-none">${proy.titulo}</h3><p class="text-xs md:text-sm opacity-80 font-light pt-1 hidden sm:block max-w-2xl">${proy.descripcion}</p></div></div>`;
+                }
+                const row = document.createElement('div'); row.className = "grid grid-cols-2 md:grid-cols-4 border-t border-black group cursor-pointer portfolio-media-card h-[40vh] overflow-hidden"; row.setAttribute('data-index', globalIndex);
+                row.innerHTML = !esV ? (esInvertido ? textHTML + mediaHTML : mediaHTML + textHTML) : (esInvertido ? mediaHTML + textHTML : textHTML + mediaHTML); grid.appendChild(row);
+            });
+            grid.querySelectorAll('video').forEach(vid => { vid.setAttribute('muted', 'muted'); vid.muted = true; vid.playsInline = true; vid.load(); vid.play().catch(e => {}); });
+        }
+
+        // ROTADOR LOGOS
+        let logosActivosEnGrilla = [0, 1, 2, 3, 4, 5];
+        function ejecutarRotacionAleatoriaDeLogo() {
+            if (document.getElementById('view-info').classList.contains('hidden') || POOL_LOGOS.length <= 6) return;
+            const slot = Math.floor(Math.random() * 6); const imgTarget = document.getElementById(`client-img-${slot}`); if (!imgTarget) return;
+            const disponibles = POOL_LOGOS.map((_, idx) => idx).filter(idx => !logosActivosEnGrilla.includes(idx)); if (disponibles.length === 0) return;
+            const nuevoIndice = disponibles[Math.floor(Math.random() * disponibles.length)];
+            imgTarget.style.opacity = '0';
+            setTimeout(() => { logosActivosEnGrilla[slot] = nuevoIndice; imgTarget.src = POOL_LOGOS[nuevoIndice].src; imgTarget.style.opacity = ''; }, 400);
+        }
+        setInterval(ejecutarRotacionAleatoriaDeLogo, 2500);
+
+        cargarContenidosDesdeBackend();
+
+        // --- CONTROL DEL MENÚ ---
+        const menuOpenBtn = document.getElementById('menu-open'), menuCloseBtn = document.getElementById('menu-close'), fullScreenMenu = document.getElementById('full-screen-menu');
+        menuOpenBtn.addEventListener('click', () => { 
+            actualizarFlechaMenu(VISTA_ACTUAL_INDICATOR);
+            fullScreenMenu.classList.remove('translate-y-[-100%]'); 
+            fullScreenMenu.classList.add('translate-y-0'); 
+            document.body.classList.add('overflow-hidden'); 
+        });
+        function cerrarMenu() { fullScreenMenu.classList.remove('translate-y-0'); fullScreenMenu.classList.add('translate-y-[-100%]'); document.body.classList.remove('overflow-hidden'); }
+        menuCloseBtn.addEventListener('click', cerrarMenu);
+
+        // --- MOTOR KINETIC ---
+        const wrapper = document.getElementById('kinetic-wrapper'), measureBlack = document.getElementById('measure-wide-black'), measureLight = document.getElementById('measure-total-thin');
+        function recalcularEscalas() { const container = document.querySelector('.wide-container'); if (!container || !wrapper) return; const ancho = container.offsetWidth; if(measureBlack) wrapper.style.setProperty('--scale-reposo', ancho / measureBlack.offsetWidth); if(measureLight) wrapper.style.setProperty('--scale-hover', ancho / measureLight.offsetWidth); }
+        document.fonts.ready.then(recalcularEscalas); window.addEventListener('resize', recalcularEscalas);
+
+        // --- LIGHTBOX ENGINE ---
+        const lightbox = document.getElementById('lightbox-modal'), lightboxContent = document.getElementById('lightbox-content'), lightboxClose = document.getElementById('lightbox-close'), lightboxNext = document.getElementById('lightbox-next'), lightboxPrev = document.getElementById('lightbox-prev');
+        let lightboxArray = []; let lightboxIndex = 0;
+        function abrirLightboxConContexto(arrayTarget, indexTarget) { lightboxArray = arrayTarget; lightboxIndex = indexTarget; actualizarLightbox(); lightbox.classList.remove('hidden'); document.body.classList.add('overflow-hidden'); }
+        function actualizarLightbox() {
+            const proy = lightboxArray[lightboxIndex]; lightboxContent.innerHTML = ''; if (!proy) return;
+            if (proy.tipo === 'video') {
+                let srcUrl = proy.lightboxSrc.trim();
+                if (srcUrl.includes('youtube.com') || srcUrl.includes('shorts') || srcUrl.includes('youtu.be') || srcUrl.includes('vimeo.com')) {
+                    if (srcUrl.includes('youtube.com/shorts/')) srcUrl = `https://www.youtube.com/embed/${srcUrl.split('shorts/')[1].split('?')[0]}?autoplay=1`;
+                    else if (srcUrl.includes('youtube.com/watch?v=')) srcUrl = `https://www.youtube.com/embed/${srcUrl.split('v=')[1].split('&')[0]}?autoplay=1`;
+                    else if (srcUrl.includes('youtu.be/')) srcUrl = `https://www.youtube.com/embed/${srcUrl.split('youtu.be/')[1].split('?')[0]}?autoplay=1`;
+                    let iframeClass = proy.ratio === "9:16" ? "h-[80vh] aspect-[9/16]" : "w-[80vw] aspect-video max-h-[80vh]";
+                    lightboxContent.innerHTML = `<iframe src="${srcUrl}" class="${iframeClass}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+                } else { lightboxContent.innerHTML = `<video class="w-full h-auto max-h-[75vh]" controls autoplay src="${srcUrl.replace('/public/', '/')}"></video>`; }
+            } else { lightboxContent.innerHTML = `<img class="w-full h-auto max-h-[75vh]" src="${proy.lightboxSrc.trim().replace('/public/', '/')}"/>`; }
+        }
+        document.getElementById('featured-projects').addEventListener('click', (e) => { const card = e.target.closest('.project-media-card'); if (card) abrirLightboxConContexto(ARCHIVO_DESTACADOS, parseInt(card.getAttribute('data-index'), 10)); });
+        document.getElementById('portfolio-grid').addEventListener('click', (e) => { const card = e.target.closest('.portfolio-media-card'); if (card) abrirLightboxConContexto(ARCHIVO_PORTFOLIO, parseInt(card.getAttribute('data-index'), 10)); });
+        function cerrarLightbox() { lightbox.classList.add('hidden'); lightboxContent.innerHTML = ''; if (!fullScreenMenu.classList.contains('translate-y-0')) document.body.classList.remove('overflow-hidden'); }
+        lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); lightboxIndex = (lightboxIndex + 1) % lightboxArray.length; actualizarLightbox(); });
+        lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); lightboxIndex = (lightboxIndex - 1 + lightboxArray.length) % lightboxArray.length; actualizarLightbox(); });
+        lightboxClose.addEventListener('click', cerrarLightbox); lightbox.addEventListener('click', (e) => { if (e.target === lightbox) cerrarLightbox(); });
+
+        // --- MANIFIESTO LOOP HOVER ---
+        const portfolioBg = document.getElementById('portfolio-bg');
+        document.querySelectorAll('.portfolio-item').forEach(item => { item.addEventListener('mouseenter', () => { portfolioBg.src = item.getAttribute('data-img'); portfolioBg.style.opacity = '0.25'; }); item.addEventListener('mouseleave', () => { portfolioBg.style.opacity = '0'; }); });
+        
+        // --- ASCII GUTTER ENGINE ---
+        const asciiGutterStreams = document.querySelectorAll('.ascii-gutter-panel');
+        function renderProceduralASCII() {
+            if (window.innerWidth < 1200) return; let cols = Math.max(4, Math.floor(((window.innerWidth - 1200) / 2) / 13)), rows = Math.ceil(window.innerHeight / 11) + 5, str = ""; animationFrameCount += 0.03;
+            for (let y = 0; y < rows; y++) { for (let x = 0; x < cols; x++) { str += asciiSymbols[Math.floor(Math.abs((Math.sin(x * 0.15 + animationFrameCount) + Math.cos(y * 0.15 + animationFrameCount)) * 3.5)) % asciiSymbols.length] + " "; } str += "\n"; }
+            asciiGutterStreams.forEach(stream => { stream.textContent = str; });
+        }
+        let animationFrameCount = 0; const asciiSymbols = ["W", "&", "V", "$", "#", "[", "]"]; setInterval(renderProceduralASCII, 50);
+
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); const formData = new URLSearchParams(new FormData(e.target));
+            const response = await fetch(`${API_BASE}/api/contacto`, { method: 'POST', body: formData, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+            if (response.ok) { alert('¡Mensaje enviado!'); e.target.reset(); }
+        });
+    </script>
+</body>
+</html>
