@@ -9,6 +9,7 @@ const pathProyectos = path.join(__dirname, 'proyectos.json');
 const pathColores = path.join(__dirname, 'colores.json'); 
 const pathRedes = path.join(__dirname, 'redes.json'); 
 const pathInfo = path.join(__dirname, 'info.json');
+const pathContacto = path.join(__dirname, 'contactos.json'); // ? Archivo para guardar mensajes
 
 // Puerta de enlace CORS Nativa e Infalible
 app.use((req, res, next) => {
@@ -102,13 +103,12 @@ app.post('/api/proyectos', (req, res) => {
     });
 });
 
-// ? NUEVA RUTA: Eliminar pieza por su posición en el Array
 app.delete('/api/proyectos/:index', (req, res) => {
     const index = parseInt(req.params.index, 10);
     fs.readFile(pathProyectos, 'utf8', (err, data) => {
         let proy = []; if (!err && data) { try { proy = JSON.parse(data); } catch(e){} }
         if (index >= 0 && index < proy.length) {
-            proy.splice(index, 1); // Remueve la pieza seleccionada
+            proy.splice(index, 1);
             fs.writeFile(pathProyectos, JSON.stringify(proy, null, 2), (writeErr) => {
                 if (writeErr) return res.status(500).json({ error: "Error de escritura" });
                 res.json({ success: true });
@@ -116,6 +116,27 @@ app.delete('/api/proyectos/:index', (req, res) => {
         } else {
             res.status(400).json({ error: "Índice fuera de rango" });
         }
+    });
+});
+
+// ? NUEVA RUTA: Recibir y almacenar datos del formulario de contacto
+app.post('/api/contacto', (req, res) => {
+    fs.readFile(pathContacto, 'utf8', (err, data) => {
+        let mensajes = [];
+        if (!err && data) { try { mensajes = JSON.parse(data); } catch(e){} }
+        
+        // Empuja el nuevo mensaje recibido
+        mensajes.push({
+            nombre: req.body.nombre,
+            email: req.body.email,
+            mensaje: req.body.mensaje,
+            fecha: new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' })
+        });
+        
+        fs.writeFile(pathContacto, JSON.stringify(mensajes, null, 2), (writeErr) => {
+            if (writeErr) return res.status(500).json({ error: "Error al guardar el mensaje" });
+            res.json({ success: true });
+        });
     });
 });
 
